@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>醒市无仓 - 代储代销</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f0f2f5;
+            line-height: 1.6;
+        }
+        
+        /* 顶部导航 */
+        .top-nav {
+            background: linear-gradient(135deg, #ffd700 0%, #ffcc00 100%);
+            color: #333;
+            padding: 0 40px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-brand {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #333;
+        }
+        .nav-brand .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .nav-service-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .nav-service-card:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .nav-service-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-service-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .nav-service-link {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .nav-service-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        /* 二级菜单 */
+        .sub-nav {
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 0 40px;
+            display: flex;
+            gap: 40px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .sub-nav-item {
+            padding: 15px 0;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .sub-nav-item:hover {
+            color: #1890ff;
+        }
+        .sub-nav-item.active {
+            color: #1890ff;
+            font-weight: 500;
+        }
+        .sub-nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #1890ff;
+        }
+        
+        /* 页面内容 */
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* 页面标题区 */
+        .page-header {
+            background: #fff;
+            padding: 24px 32px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .page-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 8px;
+        }
+        .page-subtitle {
+            font-size: 13px;
+            color: #8c8c8c;
+        }
+        
+        /* 卡片 */
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #262626;
+        }
+        .card-body {
+            padding: 24px;
+        }
+        
+        /* 服务选择卡片 */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 16px;
+        }
+        .service-card {
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        .service-card:hover {
+            border-color: #1890ff;
+            box-shadow: 0 4px 16px rgba(24,144,255,0.15);
+            transform: translateY(-2px);
+        }
+        .service-card.selected {
+            border-color: #1890ff;
+            background: #e6f7ff;
+        }
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .service-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 8px;
+        }
+        .service-card.selected .service-name {
+            color: #1890ff;
+        }
+        .service-desc {
+            font-size: 13px;
+            color: #8c8c8c;
+            margin-bottom: 16px;
+        }
+        .service-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        .tag-selected {
+            background: #52c41a;
+            color: #fff;
+        }
+        
+        /* 表单 */
+        .form-section {
+            margin-bottom: 32px;
+        }
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 20px;
+            padding-left: 12px;
+            border-left: 4px solid #1890ff;
+        }
+        .form-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1;
+        }
+        .form-group.half {
+            flex: 0 0 calc(50% - 12px);
+        }
+        .form-group.third {
+            flex: 0 0 calc(33.333% - 16px);
+        }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #262626;
+            margin-bottom: 8px;
+        }
+        .form-label .required {
+            color: #ff4d4f;
+            margin-left: 4px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #1890ff;
+            box-shadow: 0 0 0 3px rgba(24,144,255,0.1);
+        }
+        .form-input:disabled {
+            background: #f5f5f5;
+            color: #8c8c8c;
+            cursor: not-allowed;
+        }
+        select.form-input {
+            cursor: pointer;
+        }
+        
+        /* 按钮 */
+        .btn {
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+        }
+        .btn-primary:disabled {
+            background: #bfbfbf;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-default {
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            color: #595959;
+        }
+        .btn-default:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+            color: #fff;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%);
+            color: #fff;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        
+        /* 搜索区域 */
+        .search-area {
+            background: #fafafa;
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-end;
+        }
+        .search-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .search-item .form-input {
+            min-width: 180px;
+        }
+        
+        /* 工具栏 */
+        .toolbar {
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* 表格 */
+        .data-table {
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .data-table th {
+            background: #fafafa;
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: 600;
+            color: #262626;
+            white-space: nowrap;
+        }
+        .data-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #595959;
+            white-space: nowrap;
+        }
+        .data-table tr:hover {
+            background: #fafafa;
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+        /* 表格滚动容器 */
+        .table-scroll { overflow-x: auto; margin: 0 24px 24px; width: calc(100% - 48px); }
+        .table-scroll .data-table { width: auto; min-width: 100%; }
+        
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .tag-success {
+            background: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+        .tag-warning {
+            background: #fffbe6;
+            color: #faad14;
+            border: 1px solid #ffe58f;
+        }
+        .tag-error {
+            background: #fff2f0;
+            color: #ff4d4f;
+            border: 1px solid #ffccc7;
+        }
+        .tag-processing {
+            background: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+        
+        /* 拨付相关样式 */
+        .payment-info-box {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .payment-info-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #389e0d;
+            margin-bottom: 16px;
+        }
+        .payment-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #d9f7be;
+        }
+        .payment-info-row:last-child {
+            border-bottom: none;
+        }
+        .payment-info-label {
+            font-size: 14px;
+            color: #595959;
+        }
+        .payment-info-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #262626;
+        }
+        .payment-info-value.amount {
+            font-size: 20px;
+            color: #cf1322;
+            font-weight: 600;
+        }
+        
+        .payment-account-box {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .payment-account-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #096dd9;
+            margin-bottom: 16px;
+        }
+        .payment-account-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 20px;
+            border: 1px solid #d9d9d9;
+        }
+        .bank-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .account-info {
+            flex: 1;
+        }
+        .account-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 4px;
+        }
+        .account-no {
+            font-size: 14px;
+            color: #8c8c8c;
+            margin-bottom: 4px;
+        }
+        .account-type {
+            font-size: 12px;
+            color: #1890ff;
+            background: #e6f7ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .payment-notice {
+            background: #fffbe6;
+            border: 1px solid #ffe58f;
+            border-radius: 8px;
+            padding: 16px 20px;
+        }
+        .payment-notice-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #d48806;
+            margin-bottom: 10px;
+        }
+        .payment-notice-text {
+            font-size: 13px;
+            color: #595959;
+            line-height: 1.8;
+        }
+        
+        /* 操作链接 */
+        .action-links {
+            display: flex;
+            gap: 12px;
+        }
+        .action-link {
+            color: #1890ff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .action-link.success {
+            color: #52c41a;
+        }
+        
+        /* 协议勾选 */
+        .agreement-box {
+            margin: 24px 0;
+            padding: 16px 20px;
+            background: #fafafa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .agreement-box input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .agreement-box label {
+            font-size: 14px;
+            color: #595959;
+            cursor: pointer;
+        }
+        .agreement-box a {
+            color: #1890ff;
+        }
+        
+        /* 提示框 */
+        .info-box {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .info-box::before {
+            content: '💡';
+            font-size: 18px;
+        }
+        .info-box-content {
+            font-size: 13px;
+            color: #1890ff;
+            line-height: 1.8;
+        }
+        
+        /* 状态流程 */
+        .status-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            background: #fafafa;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .status-dot.completed {
+            background: #52c41a;
+            color: #fff;
+        }
+        .status-dot.active {
+            background: #1890ff;
+            color: #fff;
+        }
+        .status-dot.pending {
+            background: #e8e8e8;
+            color: #8c8c8c;
+        }
+        .status-line {
+            flex: 1;
+            height: 2px;
+            background: #e8e8e8;
+            margin: 0 16px;
+            margin-bottom: 24px;
+        }
+        .status-line.active {
+            background: #1890ff;
+        }
+        .status-text {
+            font-size: 13px;
+            color: #8c8c8c;
+        }
+        .status-text.active {
+            color: #1890ff;
+            font-weight: 500;
+        }
+        .status-text.completed {
+            color: #52c41a;
+        }
+        
+        /* 弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: #fff;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: auto;
+            animation: scaleIn 0.2s ease;
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #262626;
+        }
+        .modal-close {
+            font-size: 24px;
+            color: #8c8c8c;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #262626;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #fff;
+            z-index: 9999;
+            animation: slideDown 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .toast.success { background: #52c41a; }
+        .toast.error { background: #ff4d4f; }
+        .toast.warning { background: #faad14; }
+        .toast.info { background: #1890ff; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        /* 分页样式 */
+        .pagination { display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding: 16px 24px; border-top: 1px solid #f0f0f0; }
+        .pagination-total { font-size: 13px; color: #8c8c8c; margin-right: 12px; }
+        .pagination-page { display: flex; gap: 4px; }
+        .pagination-item { min-width: 32px; height: 32px; padding: 0 8px; display: flex; align-items: center; justify-content: center; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 14px; color: #595959; cursor: pointer; transition: all 0.3s; background: #fff; }
+        .pagination-item:hover { border-color: #1890ff; color: #1890ff; }
+        .pagination-item.active { background: #1890ff; border-color: #1890ff; color: #fff; }
+        .pagination-item.disabled { color: #d9d9d9; cursor: not-allowed; border-color: #d9d9d9; }
+        .pagination-jump { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #595959; margin-left: 12px; }
+        .pagination-jump input { width: 48px; height: 32px; padding: 0 8px; border: 1px solid #d9d9d9; border-radius: 6px; text-align: center; font-size: 14px; }
+        
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .empty-text {
+            font-size: 14px;
+            color: #8c8c8c;
+            margin-bottom: 24px;
+        }
+        
+        /* Tab 切换 */
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .tab-item {
+            padding: 12px 20px;
+            font-size: 14px;
+            color: #595959;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab-item:hover {
+            color: #1890ff;
+        }
+        .tab-item.active {
+            color: #1890ff;
+            border-bottom-color: #1890ff;
+            font-weight: 500;
+        }
+        
+        /* 隐藏元素 */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="nav-brand">
+                <div class="logo-icon">🦁</div>
+                <span>醒市無仓</span>
+            </div>
+            <div class="nav-service-card" onclick="switchToService()">
+                <div class="nav-service-icon">🏦</div>
+                <div class="nav-service-info">
+                    <div class="nav-service-title">供应链服务</div>
+                    <div class="nav-service-link">去看看 ></div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="btn btn-primary" onclick="goToApplyRecords()" style="padding: 6px 16px; height: 36px; font-size: 13px;">申请记录</button>
+            <div class="nav-user">👤 能良科技</div>
+        </div>
+    </nav>
+    
+    <!-- 页面内容区 -->
+    <div class="page-container">
+                <!-- ========== 产品申请主页 ========== -->
+        <div id="page-main" class="page-content">
+            
+            <!-- 产品申请 -->
+            <div id="tab-product-apply">
+                <div class="card" style="border-radius: 0 0 8px 8px;">
+                    <div class="card-body">
+                        <div class="form-section-title">请选择服务类型</div>
+                    <div class="service-grid">
+                        <div class="service-card selected" onclick="selectService(this)">
+                            <div class="service-icon">📦</div>
+                            <div class="service-name">代储代销</div>
+                            <div class="service-desc">先入库后销售，提前回笼资金，最高可获得货值70%的保证金</div>
+                            <span class="service-tag tag-selected">✓ 已选择</span>
+                        </div>
+                        <div class="service-card" style="opacity: 0.6; cursor: not-allowed;">
+                            <div class="service-icon">💰</div>
+                            <div class="service-name">仓储回购通</div>
+                            <div class="service-desc">平台代采货物并仓储，降低库存压力，敬请期待</div>
+                            <span class="service-tag" style="background: #f5f5f5; color: #8c8c8c;">即将上线</span>
+                        </div>
+                    </div>
+                    <div class="agreement-box" style="margin-top: 24px;">
+                        <input type="checkbox" id="agreementCheckbox">
+                        <label for="agreementCheckbox">我已阅读并同意<a href="javascript:void(0)" onclick="showModal('modal-contract')">《代储代销服务协议》</a></label>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-default">取消</button>
+                        <button class="btn btn-primary" id="nextBtn" disabled onclick="goToApply()">下一步：填写申请</button>
+                    </div>
+                    <div style="text-align: center; margin-top: 12px; font-size: 13px; color: #8c8c8c;">
+                        请先勾选同意《代储代销服务协议》后才能进行下一步
+                    </div>
+                     <div class="alert-info" style="margin: 0 12px 12px; background: #e6f7ff;  color: #1890ff;">
+                        <strong>说明：</strong>
+                        <br>1. 页面交互说明
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 无仓首页“资金服务”改成供应链服务，点击进入后展示供应链相关的服务选项，目前先提供“代储代销”和“仓储回购通”两种服务，后续会根据业务发展增加更多服务。
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 跳转规则：首次进入直接进入产品选择页面，选择对应的产品后进行申请；已经有申请记录的点击后直接进入申请记录管理页面。
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 管理页面点击“新增申请”后，进入产品申请页面，选择对应的产品后进行申请。
+                        <br>2. 申请流程说明
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 申请流程：选择服务类型 → 填写申请信息 → 提交审核 → 等待审核结果 → 审核通过后货物运输 → 安排入库 → 申请完成
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 申请信息：客户信息、货物信息（名称、数量、单价）、申请金额等
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 审核流程：提交申请后，平台会对申请信息进行审核，审核内容包括但不限于申请信息的完整性、合理性以及申请人资质等。审核结果会通过系统通知申请人，审核通过后平台会安排入库事宜。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- 申请记录 -->
+        <div id="page-apply-record" class="page-content hidden">
+                <div class="card" style="border-radius: 0 0 8px 8px;">
+                    <!-- 搜索区 -->
+                <div class="search-area">
+                    <div class="search-item">
+                        <label class="form-label">申请编号</label>
+                        <input type="text" class="form-input" placeholder="请输入">
+                    </div>
+                    <div class="search-item">
+                        <label class="form-label">申请状态</label>
+                        <select class="form-input">
+                            <option>全部</option>
+                            <option>待提交</option>
+                            <option>审核中</option>
+                            <option>已通过</option>
+                            <option>已驳回</option>
+                            <option>已拒绝</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="handleQuery()">查询</button>
+                    <button class="btn btn-default" onclick="handleReset()">重置</button>
+                </div>
+                
+                <!-- 工具栏 -->
+                <div class="toolbar" style="padding: 0 24px 16px;">
+                    <button class="btn btn-primary" onclick="newApplication()">+ 新增申请</button>
+                </div>
+                
+                <!-- 表格 -->
+                <div class="table-scroll" style="padding: 0;"><table class="data-table" style="padding: 0 24px 24px; display: table; border-collapse: collapse; width: calc(100% - 48px); margin: 0 24px 24px;">
+                    <thead>
+                        <tr>
+                            <th>申请编号</th>
+                            <th>入库仓库</th>
+                            <th>货物数量</th>
+                            <th>申请总金额</th>
+                            <th>申请状态</th>
+                            <th>申请时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SQ20250909001</td>
+                            <td>醒市仓储-上海仓</td>
+                            <td>100</td>
+                            <td>¥899,900.00</td>
+                            <td><span class="tag tag-processing">审核中</span></td>
+                            <td>2026-09-09 10:00</td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showDetailModal('SQ20250909001')">查看</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SQ20250908002</td>
+                            <td>醒市仓储-深圳仓</td>
+                            <td>50</td>
+                            <td>¥958,000.00</td>
+                            <td><span class="tag tag-warning">待提交</span></td>
+                            <td>2026-09-08 15:00</td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showDetailModal('SQ20250908002')">查看</span>
+                                    <span class="action-link" onclick="editApply()">编辑</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SQ20250907003</td>
+                            <td>醒市仓储-上海仓</td>
+                            <td>200</td>
+                            <td>¥345,000.00</td>
+                            <td><span class="tag tag-success">已通过</span></td>
+                            <td>2026-09-07 09:00</td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showDetailModal('SQ20250907003')">查看</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SQ20250906004</td>
+                            <td>醒市仓储-北京仓</td>
+                            <td>80</td>
+                            <td>¥256,000.00</td>
+                            <td><span class="tag tag-error">已驳回</span></td>
+                            <td>2026-09-06 14:00</td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showDetailModal('SQ20250906004')">查看</span>
+                                    <span class="action-link" onclick="editApply()">编辑</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SQ20250905005</td>
+                            <td>醒市仓储-深圳仓</td>
+                            <td>60</td>
+                            <td>¥456,000.00</td>
+                            <td><span class="tag tag-error">已拒绝</span></td>
+                            <td>2026-09-05 16:00</td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showDetailModal('SQ20250905005')">查看</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table></div>
+                <div class="pagination">
+                    <span class="pagination-total">共 5 条</span>
+                    <div class="pagination-page">
+                        <span class="pagination-item disabled">&lt;</span>
+                        <span class="pagination-item active">1</span>
+                        <span class="pagination-item">2</span>
+                        <span class="pagination-item">3</span>
+                        <span class="pagination-item">&gt;</span>
+                    </div>
+                    <div class="pagination-jump">跳至 <input type="text" value="1"> 页</div>
+                </div>
+                <div class="alert-info" style="margin: 0 12px 12px; background: #e6f7ff;  color: #1890ff;">
+                        <strong>说明：</strong>
+                        <br>1. 申请状态说明：
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 待提交：申请信息保存草稿未提交审核，客户可以编辑后提交审核
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 审核中：申请信息已提交审核，平台正在审核中，客户可以查看申请详情但无法编辑
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 已通过：申请审核已通过，平台会安排入库事宜，客户可以查看申请详情但无法编辑
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 已驳回：申请审核未通过，平台驳回申请，客户可以查看申请详情并编辑后重新提交审核
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 已拒绝：申请审核未通过，平台拒绝申请，客户可以查看申请详情但无法编辑
+                        <br>2.状态流转：
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 客户保存草稿后，状态变成“待提交”
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 客户提交申请后，状态由“待提交”变为“审核中”
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 平台审核后，状态由“审核中”变为“已通过”或“已驳回”或“已拒绝”
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 客户修改申请后重新提交，状态由“已驳回”变为“审核中”
+                        <br>3. 编码规则：
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;• 申请编号：SQ + YYYYMMDD + 4位流水号，例如：SQ202509090001
+                        </div>
+                </div>
+        </div>
+
+<!-- ========== 申请填报页面 ========== -->
+        <div id="page-apply-form" class="page-content hidden">
+            <div class="page-header">
+                <div class="page-title">代储代销申请</div>
+                <div class="page-subtitle">填写您的货物信息并提交审核</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <!-- 基本信息 -->
+                    <div class="form-section">
+                        <div class="form-section-title">基本信息</div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label class="form-label">供应商名称</label>
+                                <input type="text" class="form-input" value="能良科技" disabled>
+                            </div>
+                            <div class="form-group half">
+                                <label class="form-label">申请时间 <span class="required">*</span></label>
+                                <input type="datetime-local" class="form-input" id="applyTime" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 货物信息 -->
+                    <div class="form-section">
+                        <div class="form-section-title">货物信息</div>
+                        <div style="margin-bottom: 16px;">
+                            <button class="btn btn-primary" onclick="showModal('modal-add-goods')">+ 添加货物</button>
+                        </div>
+                        <table class="data-table" id="goodsTable">
+                            <thead>
+                                <tr>
+                                    <th>品牌</th>
+                                    <th>商品</th>
+                                    <th>SKU</th>
+                                    <th>SKU编码</th>
+                                    <th>数量</th>
+                                    <th>单价(元)</th>
+                                    <th>总价(元)</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>苹果</td>
+                                    <td>iPhone 15 Pro</td>
+                                    <td>128GB 黑色</td>
+                                    <td>SKU001</td>
+                                    <td>100</td>
+                                    <td>8,999.00</td>
+                                    <td>899,900.00</td>
+                                    <td>
+                                        <div class="action-links">
+                                            <span class="action-link" onclick="showModal('modal-view-goods')">查看</span>
+                                            <span class="action-link" onclick="showModal('modal-edit-goods')">编辑</span>
+                                            <span class="action-link" onclick="deleteGoods(this)" style="color: #ff4d4f;">删除</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-default" onclick="saveDraft()">保存草稿</button>
+                        <button class="btn btn-primary" onclick="submitApply()">提交审核</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ========== 保证金拨付管理页面 ========== -->
+        <div id="page-payment-manage" class="page-content hidden">
+            <div class="page-header">
+                <div class="page-title">保证金拨付管理</div>
+                <div class="page-subtitle">管理保证金拨付记录，查看拨付状态</div>
+            </div>
+            
+            <div class="card">
+                <!-- 搜索区 -->
+                <div class="search-area">
+                    <div class="search-item">
+                        <label class="form-label">拨付编号</label>
+                        <input type="text" class="form-input" placeholder="请输入">
+                    </div>
+                    <div class="search-item">
+                        <label class="form-label">供应商</label>
+                        <input type="text" class="form-input" placeholder="请输入">
+                    </div>
+                    <div class="search-item">
+                        <label class="form-label">拨付状态</label>
+                        <select class="form-input">
+                            <option>全部</option>
+                            <option>待拨付</option>
+                            <option>已拨付</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="handleQuery()">查询</button>
+                    <button class="btn btn-default" onclick="handleReset()">重置</button>
+                </div>
+                
+                <!-- 表格 -->
+                <div class="table-scroll" style="padding: 0;"><table class="data-table" style="padding: 0 24px 24px; display: table; border-collapse: collapse; width: calc(100% - 48px); margin: 0 24px 24px;">
+                    <thead>
+                        <tr>
+                            <th>拨付编号</th>
+                            <th>代储订单编码</th>
+                            <th>供应商</th>
+                            <th>实际入库货值</th>
+                            <th>保证金比例</th>
+                            <th>拨付金额</th>
+                            <th>拨付时间</th>
+                            <th>拨付状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>BF20250909001</td>
+                            <td>DC20250909001</td>
+                            <td>能良科技</td>
+                            <td>¥880,000.00</td>
+                            <td>70%</td>
+                            <td>¥616,000.00</td>
+                            <td>-</td>
+                            <td><span class="tag tag-warning">待拨付</span></td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showPaymentModal('BF20250909001', '能良科技', '¥616,000.00')" style="color: #1890ff; font-weight: 500;">拨付</span>
+                                    <span class="action-link" onclick="showModal('modal-payment-detail')">详情</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BF20250909002</td>
+                            <td>DC20250909002</td>
+                            <td>无锡科技</td>
+                            <td>¥345,000.00</td>
+                            <td>70%</td>
+                            <td>¥241,500.00</td>
+                            <td>2026-09-09 16:30</td>
+                            <td><span class="tag tag-success">已拨付</span></td>
+                            <td>
+                                <div class="action-links">
+                                    <span class="action-link" onclick="showModal('modal-payment-detail')">详情</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ========== 弹窗 ========== -->
+    
+    <!-- 拨付确认弹窗 -->
+    <div class="modal-overlay" id="modal-payment-confirm" onclick="closeModalOnOverlay(event, 'modal-payment-confirm')">
+        <div class="modal" style="max-width: 560px;">
+            <div class="modal-header">
+                <div class="modal-title">保证金拨付确认</div>
+                <div class="modal-close" onclick="closeModal('modal-payment-confirm')">×</div>
+            </div>
+            <div class="modal-body">
+                <div class="payment-info-box">
+                    <div class="payment-info-title">📋 拨付信息</div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">拨付编号</span>
+                        <span class="payment-info-value" id="payment-no">BF20250909001</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">供应商</span>
+                        <span class="payment-info-value" id="payment-supplier">能良科技</span>
+                    </div>
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">拨付金额</span>
+                        <span class="payment-info-value amount" id="payment-amount">¥616,000.00</span>
+                    </div>
+                </div>
+                
+                <div class="payment-account-box">
+                    <div class="payment-account-title">💳 收款账户信息（平安钱包）</div>
+                    <div class="payment-account-card">
+                        <div class="bank-logo">平安</div>
+                        <div class="account-info">
+                            <div class="account-name">能良科技</div>
+                            <div class="account-no">**** **** **** 6688</div>
+                            <div class="account-type">平安数字钱包</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-notice">
+                    <div class="payment-notice-title">⚠️ 拨付确认提醒</div>
+                    <div class="payment-notice-text">
+                        1. 请确认收款账户信息准确无误<br>
+                        2. 拨付完成后，保证金将直接进入供应商平安钱包账户<br>
+                        3. 拨付操作不可撤销，请谨慎操作
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-payment-confirm')">取消</button>
+                <button class="btn btn-primary" onclick="confirmPayment()">确认拨付</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 拨付详情弹窗 -->
+    <div class="modal-overlay" id="modal-payment-detail" onclick="closeModalOnOverlay(event, 'modal-payment-detail')">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <div class="modal-title">拨付详情</div>
+                <div class="modal-close" onclick="closeModal('modal-payment-detail')">×</div>
+            </div>
+            <div class="modal-body">
+                <div style="background: #fafafa; padding: 20px; border-radius: 8px; line-height: 2; font-size: 14px; color: #595959;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">拨付编号</label>
+                            <div style="font-weight: 600; color: #262626;">BF20250909001</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">代储订单编码</label>
+                            <div style="font-weight: 600; color: #262626;">DC20250909001</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">供应商</label>
+                            <div>能良科技</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">拨付状态</label>
+                            <div><span class="tag tag-warning">待拨付</span></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">实际入库货值</label>
+                            <div>¥880,000.00</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">保证金比例</label>
+                            <div>70%</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">拨付金额</label>
+                            <div style="color: #1890ff; font-weight: 600; font-size: 16px;">¥616,000.00</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">收款账户</label>
+                            <div>平安数字钱包 (****6688)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-payment-detail')">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加货物弹窗 -->
+    <div class="modal-overlay" id="modal-add-goods" onclick="closeModalOnOverlay(event, 'modal-add-goods')">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">添加货物</div>
+                <div class="modal-close" onclick="closeModal('modal-add-goods')">×</div>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">品牌 <span class="required">*</span></label>
+                        <select class="form-input">
+                            <option>请选择品牌</option>
+                            <option>苹果</option>
+                            <option>华为</option>
+                            <option>小米</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">商品 <span class="required">*</span></label>
+                        <select class="form-input">
+                            <option>请选择商品</option>
+                            <option>iPhone 15 Pro</option>
+                            <option>iPhone 15</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">SKU <span class="required">*</span></label>
+                        <select class="form-input">
+                            <option>请选择SKU</option>
+                            <option>128GB 黑色</option>
+                            <option>256GB 白色</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">SKU编码</label>
+                        <input type="text" class="form-input" value="SKU001" disabled>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">数量 <span class="required">*</span></label>
+                        <input type="number" class="form-input" placeholder="请输入数量">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">单价（元） <span class="required">*</span></label>
+                        <input type="number" class="form-input" placeholder="请输入单价">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">总价（元）</label>
+                        <input type="text" class="form-input" value="0.00" disabled style="color: #1890ff; font-weight: 600;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-add-goods')">取消</button>
+                <button class="btn btn-primary" onclick="saveGoods()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 查看货物弹窗 -->
+    <div class="modal-overlay" id="modal-view-goods" onclick="closeModalOnOverlay(event, 'modal-view-goods')">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <div class="modal-title">货物详情</div>
+                <div class="modal-close" onclick="closeModal('modal-view-goods')">×</div>
+            </div>
+            <div class="modal-body">
+                <div style="background: #fafafa; padding: 20px; border-radius: 8px;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">品牌</label>
+                            <div style="font-weight: 600; color: #262626;">苹果</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">商品</label>
+                            <div style="font-weight: 600; color: #262626;">iPhone 15 Pro</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">SKU</label>
+                            <div>128GB 黑色</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SKU编码</label>
+                            <div>SKU001</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">数量</label>
+                            <div>100</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">单价</label>
+                            <div>¥8,999.00</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">总价</label>
+                            <div style="font-size: 20px; font-weight: 600; color: #1890ff;">¥899,900.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-view-goods')">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 编辑货物弹窗 -->
+    <div class="modal-overlay" id="modal-edit-goods" onclick="closeModalOnOverlay(event, 'modal-edit-goods')">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">编辑货物</div>
+                <div class="modal-close" onclick="closeModal('modal-edit-goods')">×</div>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">品牌 <span class="required">*</span></label>
+                        <select class="form-input">
+                            <option selected>苹果</option>
+                            <option>华为</option>
+                            <option>小米</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">商品 <span class="required">*</span></label>
+                        <select class="form-input">
+                            <option selected>iPhone 15 Pro</option>
+                            <option>iPhone 15</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">SKU <span class="required">*</span></label>
+                        <select class="form-input">
+                            <option selected>128GB 黑色</option>
+                            <option>256GB 白色</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">SKU编码</label>
+                        <input type="text" class="form-input" value="SKU001" disabled>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">数量 <span class="required">*</span></label>
+                        <input type="number" class="form-input" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">单价（元） <span class="required">*</span></label>
+                        <input type="number" class="form-input" value="8999.00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">总价（元）</label>
+                        <input type="text" class="form-input" value="899,900.00" disabled style="color: #1890ff; font-weight: 600;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-edit-goods')">取消</button>
+                <button class="btn btn-primary" onclick="updateGoods()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 协议弹窗 -->
+    <div class="modal-overlay" id="modal-contract" onclick="closeModalOnOverlay(event, 'modal-contract')">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <div class="modal-title">《代储代销服务协议》</div>
+                <div class="modal-close" onclick="closeModal('modal-contract')">×</div>
+            </div>
+            <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                <div style="background: #fafafa; padding: 24px; border-radius: 8px; line-height: 2; font-size: 14px; color: #595959;">
+                    <p style="margin-bottom: 16px;"><strong style="color: #262626;">第一条 服务内容</strong></p>
+                    <p style="margin-bottom: 16px; padding-left: 16px;">
+                        1.1 甲方（供应商）将货物存入乙方（平台）指定仓库，乙方提供仓储管理和货物监管服务。<br>
+                        1.2 乙方根据货物评估价值向甲方支付履约保证金，帮助甲方提前回笼资金。<br>
+                        1.3 乙方通过平台为甲方提供货物销售服务，销售完成后进行清分结算。
+                    </p>
+                    <p style="margin-bottom: 16px;"><strong style="color: #262626;">第二条 保证金支付</strong></p>
+                    <p style="margin-bottom: 16px; padding-left: 16px;">
+                        2.1 乙方根据货物评估价值，按不超过70%的比例向甲方支付履约保证金。<br>
+                        2.2 保证金支付至甲方监管账户，甲方不得擅自挪用。<br>
+                        2.3 货物销售完成后，乙方按比例扣回保证金。
+                    </p>
+                    <p style="margin-bottom: 16px;"><strong style="color: #262626;">第三条 货物监管</strong></p>
+                    <p style="margin-bottom: 16px; padding-left: 16px;">
+                        3.1 货物入库后生成电子仓单，货物自动锁定。<br>
+                        3.2 只有销售完成并支付货款后，货物方可解锁出库。<br>
+                        3.3 甲方应确保货物来源合法，质量合格。
+                    </p>
+                    <p style="margin-bottom: 16px;"><strong style="color: #262626;">第四条 费用结算</strong></p>
+                    <p style="padding-left: 16px;">
+                        4.1 乙方按订单金额收取一定比例的服务费。<br>
+                        4.2 乙方按货物存储天数收取仓储费。<br>
+                        4.3 销售货款扣除保证金、服务费、仓储费后，余款结算给甲方。
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-contract')">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 申请详情弹窗 -->
+    <div class="modal-overlay" id="modal-detail" onclick="closeModalOnOverlay(event, 'modal-detail')">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <div class="modal-title">申请详情</div>
+                <div class="modal-close" onclick="closeModal('modal-detail')">×</div>
+            </div>
+            <div class="modal-body" style="max-height: 500px; overflow-y: auto;">
+                <!-- 状态流程 -->
+                <div style="background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+                    <div style="font-size: 13px; color: #1890ff; margin-bottom: 16px; font-weight: 500;">当前状态</div>
+                    <div class="status-flow" id="detail-status-flow" style="background: transparent; padding: 0;">
+                        <div class="status-item">
+                            <div class="status-dot completed">✓</div>
+                            <div class="status-text completed">提交申请</div>
+                        </div>
+                        <div class="status-line active"></div>
+                        <div class="status-item">
+                            <div class="status-dot active">2</div>
+                            <div class="status-text active">审核中</div>
+                        </div>
+                        <div class="status-line"></div>
+                        <div class="status-item">
+                            <div class="status-dot pending">3</div>
+                            <div class="status-text">审核通过</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 基本信息 -->
+                <div style="background: #fafafa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="font-size: 12px; color: #8c8c8c; margin-bottom: 6px;">申请编号</div>
+                    <div style="font-weight: 600; color: #262626; margin-bottom: 16px; font-size: 16px;" id="detail-apply-no">SQ20250909001</div>
+                    <div class="form-row" style="margin-bottom: 0;">
+                        <div class="form-group">
+                            <div style="font-size: 12px; color: #8c8c8c; margin-bottom: 6px;">入库仓库</div>
+                            <div id="detail-warehouse">醒市仓储-上海仓</div>
+                        </div>
+                        <div class="form-group">
+                            <div style="font-size: 12px; color: #8c8c8c; margin-bottom: 6px;">申请时间</div>
+                            <div id="detail-time">2026-09-09 10:00</div>
+                        </div>
+                        <div class="form-group">
+                            <div style="font-size: 12px; color: #8c8c8c; margin-bottom: 6px;">申请状态</div>
+                            <span class="tag tag-processing" id="detail-status-tag">审核中</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 货物信息 -->
+                <div class="form-section-title">货物信息</div>
+                <table class="data-table" style="margin-bottom: 20px;">
+                    <thead>
+                        <tr>
+                            <th>品牌</th>
+                            <th>商品</th>
+                            <th>SKU</th>
+                            <th>数量</th>
+                            <th>单价</th>
+                            <th>总价</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>苹果</td>
+                            <td>iPhone 15 Pro</td>
+                            <td>128GB 黑色</td>
+                            <td>100</td>
+                            <td>¥8,999.00</td>
+                            <td>¥899,900.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="closeModal('modal-detail')">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toast 提示
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 2500);
+        }
+        
+        // 申请详情数据
+        var applyDetailData = {
+            'SQ20250909001': { status: '审核中', statusClass: 'tag-processing', warehouse: '醒市仓储-上海仓', time: '2026-09-09 10:00', qty: '100', amount: '¥899,900.00' },
+            'SQ20250908002': { status: '待提交', statusClass: 'tag-warning', warehouse: '醒市仓储-深圳仓', time: '2026-09-08 15:00', qty: '50', amount: '¥958,000.00' },
+            'SQ20250907003': { status: '已通过', statusClass: 'tag-success', warehouse: '醒市仓储-上海仓', time: '2026-09-07 09:00', qty: '200', amount: '¥345,000.00' },
+            'SQ20250906004': { status: '已驳回', statusClass: 'tag-error', warehouse: '醒市仓储-北京仓', time: '2026-09-06 14:00', qty: '80', amount: '¥256,000.00' },
+            'SQ20250905005': { status: '已拒绝', statusClass: 'tag-error', warehouse: '醒市仓储-深圳仓', time: '2026-09-05 16:00', qty: '60', amount: '¥456,000.00' }
+        };
+
+        // 渲染状态流程
+        function renderStatusFlow(status) {
+            var flowHtml = '';
+            if (status === '待提交') {
+                flowHtml = '<div class="status-item"><div class="status-dot active">1</div><div class="status-text active">提交申请</div></div>' +
+                    '<div class="status-line"></div><div class="status-item"><div class="status-dot pending">2</div><div class="status-text">审核中</div></div>' +
+                    '<div class="status-line"></div><div class="status-item"><div class="status-dot pending">3</div><div class="status-text">审核通过</div></div>';
+            } else if (status === '审核中') {
+                flowHtml = '<div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">提交申请</div></div>' +
+                    '<div class="status-line active"></div><div class="status-item"><div class="status-dot active">2</div><div class="status-text active">审核中</div></div>' +
+                    '<div class="status-line"></div><div class="status-item"><div class="status-dot pending">3</div><div class="status-text">审核通过</div></div>';
+            } else if (status === '已通过') {
+                flowHtml = '<div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">提交申请</div></div>' +
+                    '<div class="status-line active"></div><div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">审核中</div></div>' +
+                    '<div class="status-line active"></div><div class="status-item"><div class="status-dot active">3</div><div class="status-text active">审核通过</div></div>';
+            } else if (status === '已驳回') {
+                flowHtml = '<div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">提交申请</div></div>' +
+                    '<div class="status-line active"></div><div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">审核中</div></div>' +
+                    '<div class="status-line" style="background: #ff4d4f;"></div><div class="status-item"><div class="status-dot" style="background: #ff4d4f; color: #fff;">✕</div><div class="status-text" style="color: #ff4d4f; font-weight: 500;">已驳回</div></div>';
+            } else if (status === '已拒绝') {
+                flowHtml = '<div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">提交申请</div></div>' +
+                    '<div class="status-line active"></div><div class="status-item"><div class="status-dot completed">✓</div><div class="status-text completed">审核中</div></div>' +
+                    '<div class="status-line" style="background: #ff4d4f;"></div><div class="status-item"><div class="status-dot" style="background: #ff4d4f; color: #fff;">✕</div><div class="status-text" style="color: #ff4d4f; font-weight: 500;">已拒绝</div></div>';
+            }
+            return flowHtml;
+        }
+
+        // 详情弹窗
+        function showDetailModal(applyNo) {
+            var data = applyDetailData[applyNo];
+            if (!data) return;
+            document.getElementById('detail-apply-no').textContent = applyNo;
+            document.getElementById('detail-warehouse').textContent = data.warehouse;
+            document.getElementById('detail-time').textContent = data.time;
+            var tagEl = document.getElementById('detail-status-tag');
+            tagEl.textContent = data.status;
+            tagEl.className = 'tag ' + data.statusClass;
+            document.getElementById('detail-status-flow').innerHTML = renderStatusFlow(data.status);
+            showModal('modal-detail');
+        }
+
+        // 弹窗控制
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function closeModalOnOverlay(event, modalId) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(modalId);
+            }
+        }
+        
+        // 服务选择
+        function selectService(element) {
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+                card.querySelector('.service-tag').textContent = '';
+                card.querySelector('.service-tag').className = 'service-tag';
+            });
+            element.classList.add('selected');
+            element.querySelector('.service-tag').textContent = '✓ 已选择';
+            element.querySelector('.service-tag').className = 'service-tag tag-selected';
+        }
+        
+        // 协议勾选
+        document.getElementById('agreementCheckbox')?.addEventListener('change', function() {
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.disabled = !this.checked;
+        });
+        
+        // 页面跳转
+        function goToApply() {
+            showToast('正在进入申请填报页面...', 'info');
+            setTimeout(() => {
+                document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+                document.getElementById('page-apply-form').classList.remove('hidden');
+            }, 500);
+        }
+
+        function newApplication() {
+            showToast('正在进入产品申请页面...', 'info');
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-main').classList.remove('hidden');
+        }
+
+        // 供应链服务卡片点击
+        function switchToService() {
+            showToast('正在进入供应链服务...', 'info');
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-main').classList.remove('hidden');
+        }
+
+        // 申请记录页面
+        function goToApplyRecords() {
+            showToast('正在进入申请记录...', 'info');
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-apply-record').classList.remove('hidden');
+        }
+
+        function goToPaymentManage() {
+            showToast('正在进入保证金拨付管理...', 'info');
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById('page-payment-manage').classList.remove('hidden');
+        }
+        
+        function goToInbound() {
+            showToast('正在跳转至入库管理页面...', 'info');
+        }
+        
+        // 按钮操作
+        function saveDraft() {
+            showToast('草稿保存成功！', 'success');
+        }
+        
+        function submitApply() {
+            if (confirm('确定要提交审核吗？提交后将进入平台审核流程。')) {
+                showToast('提交成功！申请已进入审核流程', 'success');
+                setTimeout(() => {
+                    document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+                    document.getElementById('page-apply-record').classList.remove('hidden');
+                }, 1000);
+            }
+        }
+        
+        function saveGoods() {
+            closeModal('modal-add-goods');
+            showToast('货物添加成功！', 'success');
+        }
+        
+        function updateGoods() {
+            closeModal('modal-edit-goods');
+            showToast('修改保存成功！', 'success');
+        }
+        
+        function deleteGoods(btn) {
+            if (confirm('确定要删除这条货物记录吗？')) {
+                btn.closest('tr').remove();
+                showToast('删除成功！', 'success');
+            }
+        }
+        
+        function cancelApply() {
+            if (confirm('确定取消该申请吗？取消后将无法恢复。')) {
+                showToast('申请已取消', 'warning');
+            }
+        }
+        
+        function editApply() {
+            showToast('正在进入编辑页面...', 'info');
+            setTimeout(() => {
+                document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+                document.getElementById('page-apply-form').classList.remove('hidden');
+            }, 500);
+        }
+        
+        function handleQuery() {
+            showToast('正在查询...', 'info');
+            setTimeout(() => {
+                showToast('查询完成，共4条记录', 'success');
+            }, 600);
+        }
+        
+        function handleReset() {
+            showToast('已重置查询条件', 'info');
+        }
+        
+        // 拨付相关函数
+        function showPaymentModal(no, supplier, amount) {
+            document.getElementById('payment-no').textContent = no;
+            document.getElementById('payment-supplier').textContent = supplier;
+            document.getElementById('payment-amount').textContent = amount;
+            showModal('modal-payment-confirm');
+        }
+        
+        function confirmPayment() {
+            closeModal('modal-payment-confirm');
+            showToast('保证金拨付成功！款项已转入供应商平安钱包账户', 'success');
+        }
+        
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // 设置申请时间为当前时间
+        function setCurrentApplyTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const formattedTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+            const applyTimeInput = document.getElementById('applyTime');
+            if (applyTimeInput) {
+                applyTimeInput.value = formattedTime;
+            }
+        }
+        
+        // 页面加载时设置申请时间
+        setCurrentApplyTime();
+    </script>
+</body>
+</html>
