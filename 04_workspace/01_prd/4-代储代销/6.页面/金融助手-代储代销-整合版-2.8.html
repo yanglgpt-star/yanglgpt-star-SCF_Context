@@ -810,7 +810,7 @@
         <div class="modal">
             <div class="modal-header"><div class="modal-title">仓单详情</div><span class="modal-close" onclick="closeModal('modal-warehouse-detail')">&times;</span></div>
             <div class="modal-body">
-                <div class="info-section"><div class="section-title">仓单基本信息</div><div class="info-grid"><div class="info-item"><span class="info-label">仓单编号</span><span class="info-value highlight" id="warehouse-detail-no">CD20250909001</span></div><div class="info-item"><span class="info-label">批次编号</span><span class="info-value" id="warehouse-detail-batch-no">DCPC202609090001</span></div><div class="info-item"><span class="info-label">代储订单编码</span><span class="info-value" id="warehouse-detail-order-no">DC20250909001</span></div><div class="info-item"><span class="info-label">供应商</span><span class="info-value" id="warehouse-detail-supplier">能良科技</span></div><div class="info-item"><span class="info-label">入库日期</span><span class="info-value" id="warehouse-detail-date">2026-09-09</span></div><div class="info-item"><span class="info-label">仓单状态</span><span class="info-value" id="warehouse-detail-status"><span class="status-tag status-normal">普通存单</span></span></div><div class="info-item"><span class="info-label">仓库地址</span><span class="info-value" id="warehouse-detail-address">上海市浦东新区张江高科技园区</span></div><div class="info-item"><span class="info-label">原始数量</span><span class="info-value" id="warehouse-detail-original-qty" style="color: #262626; font-weight: 600;">100</span></div><div class="info-item"><span class="info-label">已释放</span><span class="info-value" id="warehouse-detail-released-qty" style="color: #1890ff; font-weight: 600;">30</span></div><div class="info-item"><span class="info-label">锁定中</span><span class="info-value" id="warehouse-detail-locked-qty" style="color: #52c41a; font-weight: 600;">70</span></div></div></div>
+                <div class="info-section"><div class="section-title">仓单基本信息</div><div class="info-grid"><div class="info-item"><span class="info-label">仓单编号</span><span class="info-value highlight" id="warehouse-detail-no">CD20250909001</span></div><div class="info-item"><span class="info-label">批次编号</span><span class="info-value" id="warehouse-detail-batch-no">DCPC202609090001</span></div><div class="info-item"><span class="info-label">代储订单编码</span><span class="info-value" id="warehouse-detail-order-no">DC20250909001</span></div><div class="info-item"><span class="info-label">供应商</span><span class="info-value" id="warehouse-detail-supplier">能良科技</span></div><div class="info-item"><span class="info-label">入库日期</span><span class="info-value" id="warehouse-detail-date">2026-09-09</span></div><div class="info-item"><span class="info-label">仓单状态</span><span class="info-value" id="warehouse-detail-status"><span class="status-tag status-normal">普通存单</span></span></div><div class="info-item"><span class="info-label">仓库名称</span><span class="info-value" id="warehouse-detail-name">醒市仓储-上海仓</span></div><div class="info-item"><span class="info-label">原始数量</span><span class="info-value" id="warehouse-detail-original-qty" style="color: #262626; font-weight: 600;">100</span></div><div class="info-item"><span class="info-label">已释放</span><span class="info-value" id="warehouse-detail-released-qty" style="color: #1890ff; font-weight: 600;">30</span></div><div class="info-item"><span class="info-label">锁定中</span><span class="info-value" id="warehouse-detail-locked-qty" style="color: #52c41a; font-weight: 600;">70</span></div></div></div>
                 <div class="info-section"><div class="section-title">货物明细</div><table class="detail-table"><thead><tr><th>货物名称</th><th>规格型号</th><th>品牌</th><th style="text-align: right;">数量</th><th>单位</th><th style="text-align: right;">单价</th><th style="text-align: right;">金额</th></tr></thead><tbody id="warehouse-detail-goods-body"><tr><td id="warehouse-detail-goods-name">iPhone 15 Pro</td><td id="warehouse-detail-goods-spec">128GB 黑色</td><td id="warehouse-detail-goods-brand">Apple</td><td style="text-align: right;" id="warehouse-detail-goods-qty">100</td><td id="warehouse-detail-goods-unit">台</td><td style="text-align: right;" id="warehouse-detail-goods-price">¥8,800.00</td><td style="text-align: right;" id="warehouse-detail-goods-amount">¥880,000.00</td></tr></tbody></table></div>
                 <div class="info-section"><div class="section-title">评估汇总</div><div class="summary-box"><div class="summary-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="summary-item"><div class="summary-label">货物总评估价</div><div class="summary-value" id="warehouse-detail-total-value">¥880,000.00</div></div><div class="summary-divider"></div><div class="summary-item"><div class="summary-label">保证金比例</div><div class="summary-value" id="warehouse-detail-pledge-ratio">70%</div></div></div></div></div>
             </div>
@@ -1116,35 +1116,35 @@
             'CD20250909001': {
                 warehouseNo: 'CD20250909001', orderNo: 'DC20250909001', supplier: '能良科技',
                 inboundDate: '2026-09-09', status: '普通存单', statusClass: 'status-normal',
-                warehouseAddress: '上海市浦东新区张江高科技园区', originalQty: '100', releasedQty: '30', lockedQty: '70',
+                warehouseName: '醒市仓储-上海仓', originalQty: '100', releasedQty: '30', lockedQty: '70',
                 goodsName: 'iPhone 15 Pro', spec: '128GB 黑色', brand: 'Apple', qty: '100', unit: '台', unitPrice: '¥8,800.00', amount: '¥880,000.00',
                 totalValue: '¥880,000.00', pledgeRatio: '70%', maxPledgeAmount: '¥616,000.00', pledgedAmount: '¥0.00'
             },
             'CD20250908002': {
                 warehouseNo: 'CD20250908002', orderNo: 'DC20250908001', supplier: '华为技术有限公司',
                 inboundDate: '2026-09-08', status: '已质押', statusClass: 'status-pledged',
-                warehouseAddress: '深圳市南山区科技园', originalQty: '200', releasedQty: '0', lockedQty: '200',
+                warehouseName: '醒市仓储-深圳仓', originalQty: '200', releasedQty: '0', lockedQty: '200',
                 goodsName: 'Mate 60 Pro', spec: '256GB 雅川青', brand: '华为', qty: '200', unit: '台', unitPrice: '¥6,000.00', amount: '¥1,200,000.00',
                 totalValue: '¥1,200,000.00', pledgeRatio: '70%', maxPledgeAmount: '¥840,000.00', pledgedAmount: '¥840,000.00'
             },
             'CD20250907003': {
                 warehouseNo: 'CD20250907003', orderNo: 'DC20250907001', supplier: '小米科技',
                 inboundDate: '2026-09-07', status: '部分释放', statusClass: 'status-partial',
-                warehouseAddress: '北京市海淀区中关村', originalQty: '150', releasedQty: '50', lockedQty: '100',
+                warehouseName: '醒市仓储-北京仓', originalQty: '150', releasedQty: '50', lockedQty: '100',
                 goodsName: '小米14 Ultra', spec: '512GB 钛金属', brand: '小米', qty: '150', unit: '台', unitPrice: '¥5,000.00', amount: '¥750,000.00',
                 totalValue: '¥750,000.00', pledgeRatio: '70%', maxPledgeAmount: '¥525,000.00', pledgedAmount: '¥350,000.00'
             },
             'CD20250906004': {
                 warehouseNo: 'CD20250906004', orderNo: 'DC20250906001', supplier: 'OPPO广东移动通信',
                 inboundDate: '2026-09-06', status: '待生效', statusClass: 'status-pending',
-                warehouseAddress: '东莞市长安镇OPPO工业园', originalQty: '80', releasedQty: '0', lockedQty: '80',
+                warehouseName: '醒市仓储-东莞仓', originalQty: '80', releasedQty: '0', lockedQty: '80',
                 goodsName: 'OPPO Find X7', spec: '256GB 星空黑', brand: 'OPPO', qty: '80', unit: '台', unitPrice: '¥6,000.00', amount: '¥480,000.00',
                 totalValue: '¥480,000.00', pledgeRatio: '70%', maxPledgeAmount: '¥336,000.00', pledgedAmount: '¥0.00'
             },
             'CD20250905005': {
                 warehouseNo: 'CD20250905005', orderNo: 'DC20250905001', supplier: 'vivo移动通信',
                 inboundDate: '2026-09-05', status: '已核销', statusClass: 'status-cancelled',
-                warehouseAddress: '东莞市长安镇vivo工业园', originalQty: '120', releasedQty: '120', lockedQty: '0',
+                warehouseName: '醒市仓储-东莞仓', originalQty: '120', releasedQty: '120', lockedQty: '0',
                 goodsName: 'vivo X100 Pro', spec: '256GB 辰夜黑', brand: 'vivo', qty: '120', unit: '台', unitPrice: '¥5,000.00', amount: '¥600,000.00',
                 totalValue: '¥600,000.00', pledgeRatio: '70%', maxPledgeAmount: '¥420,000.00', pledgedAmount: '¥0.00'
             }
@@ -1160,7 +1160,7 @@
             document.getElementById('warehouse-detail-supplier').textContent = data.supplier;
             document.getElementById('warehouse-detail-date').textContent = data.inboundDate;
             document.getElementById('warehouse-detail-status').innerHTML = '<span class="status-tag ' + data.statusClass + '">' + data.status + '</span>';
-            document.getElementById('warehouse-detail-address').textContent = data.warehouseAddress;
+            document.getElementById('warehouse-detail-name').textContent = data.warehouseName;
             document.getElementById('warehouse-detail-original-qty').textContent = data.originalQty;
             document.getElementById('warehouse-detail-released-qty').textContent = data.releasedQty;
             document.getElementById('warehouse-detail-locked-qty').textContent = data.lockedQty;
