@@ -103,7 +103,7 @@ body{
 .sub-down{color:var(--green);}
 
 /* ── Distribution Grid & Charts ── */
-.dist-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.dist-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:14px;}
 .dist-chart{width:100%;height:160px;margin-top:4px;}
 .dist-card .dist-note{
   font-size:10px;
@@ -293,20 +293,33 @@ body{
       </div>
     </div>
   </div>
-<!-- ═══ 第二层：品牌占比 · 品类分布 · 货龄结构 ═══ -->
+<!-- ═══ 第二层：代采/代储 品牌占比 · 品类分布 · 货龄结构 ═══ -->
   <div class="span-12 dist-grid">
     <div class="card">
       <div class="card-header">
-        <span class="title">品牌占比</span>
+        <span class="title">代采品牌占比</span>
         <span class="badge">单一品牌 ≤40%</span>
       </div>
-      <div class="dist-chart" id="brandChart"></div>
+      <div class="dist-chart" id="brandChartDC"></div>
     </div>
     <div class="card">
       <div class="card-header">
-        <span class="title">品类分布</span>
+        <span class="title">代采品类分布</span>
       </div>
-      <div class="dist-chart" id="categoryChart"></div>
+      <div class="dist-chart" id="categoryChartDC"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="title">代储品牌占比</span>
+        <span class="badge">单一品牌 ≤40%</span>
+      </div>
+      <div class="dist-chart" id="brandChartDS"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="title">代储品类分布</span>
+      </div>
+      <div class="dist-chart" id="categoryChartDS"></div>
     </div>
     <div class="card">
       <div class="card-header">
@@ -472,21 +485,20 @@ let isNational = true;        // 趋势图是否展示全国数据
 // ══════════════════════════════════════════════════
 
 // ══════════════════════════════════════════════════
-//  品牌占比 / 品类分布 / 货龄结构
+//  代采/代储 品牌占比 / 品类分布 / 货龄结构
 // ══════════════════════════════════════════════════
 
-// 品牌占比（水平柱状图）
-const brandChart = echarts.init(document.getElementById('brandChart'));
-function renderBrandChart() {
+// 代采品牌占比（水平柱状图）
+const brandChartDC = echarts.init(document.getElementById('brandChartDC'));
+function renderBrandChartDC() {
   const raw = [
-    {name:'Apple',  value:34, color:'#555555'},
-    {name:'华为',   value:26, color:'#ff3b30'},
-    {name:'小米',   value:18, color:'#ff9500'},
-    {name:'联想',   value:10, color:'#007aff'},
-    {name:'OPPO',   value: 7, color:'#34c759'},
-    {name:'其他',   value: 5, color:'#8e8e93'},
+    {name:'Apple',  value:32, color:'#555555'},
+    {name:'华为',   value:28, color:'#ff3b30'},
+    {name:'小米',   value:20, color:'#ff9500'},
+    {name:'联想',   value:12, color:'#007aff'},
+    {name:'OPPO',   value: 8, color:'#34c759'},
   ].sort((a,b) => a.value - b.value);
-  brandChart.setOption({
+  brandChartDC.setOption({
     tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br/>占比: ${p[0].value}%`},
     grid:{left:60,right:10,top:5,bottom:5},
     xAxis:{type:'value',max:40,splitLine:{lineStyle:{color:'#1e2440',type:'dashed'}},
@@ -502,11 +514,11 @@ function renderBrandChart() {
     }],
   });
 }
-renderBrandChart();
+renderBrandChartDC();
 
-// 品类分布（环形图）
-const categoryChart = echarts.init(document.getElementById('categoryChart'));
-categoryChart.setOption({
+// 代采品类分布（环形图）
+const categoryChartDC = echarts.init(document.getElementById('categoryChartDC'));
+categoryChartDC.setOption({
   tooltip:{trigger:'item',formatter:'{b}: {c}%'},
   series:[{
     type:'pie',radius:['45%','70%'],center:['50%','50%'],
@@ -514,10 +526,56 @@ categoryChart.setOption({
     labelLine:{lineStyle:{color:'#2a3052'}},
     itemStyle:{borderColor:'#111522',borderWidth:2},
     data:[
-      {value:52,name:'手机',itemStyle:{color:'#1890ff'}},
-      {value:22,name:'笔记本',itemStyle:{color:'#52c41a'}},
-      {value:16,name:'平板',itemStyle:{color:'#faad14'}},
+      {value:48,name:'手机',itemStyle:{color:'#1890ff'}},
+      {value:24,name:'笔记本',itemStyle:{color:'#52c41a'}},
+      {value:18,name:'平板',itemStyle:{color:'#faad14'}},
       {value:10,name:'智能家电',itemStyle:{color:'#ff4d4f'}},
+    ],
+  }],
+});
+
+// 代储品牌占比（水平柱状图）
+const brandChartDS = echarts.init(document.getElementById('brandChartDS'));
+function renderBrandChartDS() {
+  const raw = [
+    {name:'海尔',   value:30, color:'#005bac'},
+    {name:'美的',   value:26, color:'#0072c6'},
+    {name:'格力',   value:18, color:'#e60012'},
+    {name:'海信',   value:14, color:'#009a44'},
+    {name:'TCL',    value:12, color:'#c8102e'},
+  ].sort((a,b) => a.value - b.value);
+  brandChartDS.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:p=>`${p[0].name}<br/>占比: ${p[0].value}%`},
+    grid:{left:60,right:10,top:5,bottom:5},
+    xAxis:{type:'value',max:40,splitLine:{lineStyle:{color:'#1e2440',type:'dashed'}},
+      axisLabel:{color:'#4a5278',fontSize:9,formatter:'{value}%'},
+      axisLine:{lineStyle:{color:'#1e2440'}}},
+    yAxis:{type:'category',data:raw.map(r=>r.name),
+      axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#8892b0',fontSize:10}},
+    series:[{
+      type:'bar',barWidth:10,
+      itemStyle:{color:p=>raw[p.dataIndex].color,borderRadius:[0,4,4,0]},
+      label:{show:true,position:'right',color:'#8892b0',fontSize:10,formatter:'{c}%'},
+      data:raw.map(r=>r.value),
+    }],
+  });
+}
+renderBrandChartDS();
+
+// 代储品类分布（环形图）
+const categoryChartDS = echarts.init(document.getElementById('categoryChartDS'));
+categoryChartDS.setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c}%'},
+  series:[{
+    type:'pie',radius:['45%','70%'],center:['50%','50%'],
+    label:{color:'#8892b0',fontSize:10,formatter:'{b}\n{d}%'},
+    labelLine:{lineStyle:{color:'#2a3052'}},
+    itemStyle:{borderColor:'#111522',borderWidth:2},
+    data:[
+      {value:42,name:'大家电',itemStyle:{color:'#1890ff'}},
+      {value:28,name:'小家电',itemStyle:{color:'#52c41a'}},
+      {value:18,name:'数码',itemStyle:{color:'#faad14'}},
+      {value:12,name:'其他',itemStyle:{color:'#ff4d4f'}},
     ],
   }],
 });
@@ -775,8 +833,10 @@ function clearDrill() {
 
 window.addEventListener('resize', () => {
   trendChart.resize();
-  brandChart.resize();
-  categoryChart.resize();
+  brandChartDC.resize();
+  categoryChartDC.resize();
+  brandChartDS.resize();
+  categoryChartDS.resize();
   agingChart.resize();
 });
 </script>
