@@ -123,61 +123,6 @@ body{
 .chart-wrap{width:100%;height:320px;}
 .chart-wrap-lg{height:400px;}
 
-/* ── Province Bar Chart (pure HTML) ── */
-.prov-list{height:400px;overflow-y:auto;padding-right:4px;margin-top:-4px;}
-.prov-list::-webkit-scrollbar{width:3px;}
-.prov-list::-webkit-scrollbar-thumb{background:#2a3052;border-radius:2px;}
-.prov-item{
-  display:flex;align-items:center;gap:10px;
-  padding:5px 0;cursor:pointer;border-radius:4px;transition:background .15s;
-}
-.prov-item:hover{background:rgba(255,255,255,.03);}
-.prov-item .rank-num{
-  width:22px;text-align:right;font-size:11px;color:var(--text-muted);font-weight:600;flex-shrink:0;
-}
-.prov-item .prov-name{
-  width:52px;font-size:12px;color:var(--text-secondary);flex-shrink:0;text-align:right;
-}
-.prov-item .bar-track{
-  flex:1;height:16px;background:#1a2040;border-radius:8px;overflow:hidden;position:relative;
-}
-.prov-item .bar-fill{
-  height:100%;border-radius:8px;transition:width .6s ease;
-  min-width:2px;
-}
-.prov-item .bar-val{
-  width:80px;font-size:11px;font-variant-numeric:tabular-nums;
-  text-align:right;flex-shrink:0;
-}
-.prov-item .bar-fill.gold{background:linear-gradient(90deg,#ffd700,#ffed70);}
-.prov-item .bar-fill.silver{background:linear-gradient(90deg,#c0c0c0,#d8d8d8);}
-.prov-item .bar-fill.bronze{background:linear-gradient(90deg,#cd7f32,#e09a50);}
-.prov-item .bar-fill.normal{background:linear-gradient(90deg,#1890ff,#4dabff);}
-
-/* ── Agent List ── */
-.agent-list{height:400px;overflow-y:auto;padding-right:2px;}
-.agent-list::-webkit-scrollbar{width:3px;}
-.agent-list::-webkit-scrollbar-thumb{background:#2a3052;border-radius:2px;}
-.agent-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);
-}
-.agent-item:last-child{border-bottom:none;}
-.agent-item .agent-rank{font-size:11px;color:var(--text-muted);width:18px;text-align:right;flex-shrink:0;}
-.agent-item .agent-name{font-size:12px;color:var(--text-secondary);flex:1;margin-left:8px;}
-.agent-item .agent-val{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;}
-.agent-item .agent-val.gold{color:var(--gold);}
-.agent-item .agent-val.silver{color:var(--silver);}
-.agent-item .agent-val.bronze{color:var(--bronze);}
-.agent-item .agent-val.normal{color:var(--text-primary);}
-.agent-item .agent-dot{
-  width:4px;height:4px;border-radius:50%;flex-shrink:0;
-}
-.agent-item .agent-dot.gold{background:var(--gold);}
-.agent-item .agent-dot.silver{background:var(--silver);}
-.agent-item .agent-dot.bronze{background:var(--bronze);}
-.agent-item .agent-dot.normal{background:var(--text-muted);}
-
 /* ── Responsive ── */
 @media(max-width:1200px){
   .stats-row{grid-template-columns:1fr 1fr 1fr;}
@@ -193,22 +138,6 @@ body{
   .span-9,.span-3,.dist-grid{grid-column:span 12;}
   .dist-grid{grid-template-columns:1fr;}
 }
-
-/* ── Drill-down breadcrumb ── */
-.drill-bar{
-  grid-column:1 / -1;
-  display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-secondary);
-  min-height:28px;
-}
-.drill-bar .tag{
-  background:var(--bg-card-alt);border:1px solid var(--border);border-radius:4px;
-  padding:2px 10px;display:inline-flex;align-items:center;gap:6px;
-}
-.drill-bar .tag .close{
-  cursor:pointer;opacity:.5;font-size:14px;line-height:1;
-}
-.drill-bar .tag .close:hover{opacity:1;color:var(--red);}
-.drill-hint{color:var(--text-muted);font-style:italic;}
 
 /* ── Top toolbar ── */
 .top-bar{
@@ -383,30 +312,13 @@ body{
     <div class="chart-wrap" id="trendChart"></div>
   </div>
 
-  <!-- ═══ 第五层：省份排名 ═══ -->
-  <div class="card span-9">
-    <div class="card-header">
-      <div class="title">省份排名</div>
-      <div style="display:flex;gap:12px;align-items:center;">
-        <span style="font-size:11px;color:var(--text-muted);">点击省份可下钻查看该省趋势</span>
-        <div class="badge">Top 3 高亮</div>
-      </div>
-    </div>
-    <div class="prov-list" id="provinceList"></div>
-  </div>
-
-  <!-- ═══ 经办人排名 ═══ -->
-  <div class="card span-3">
+  <!-- ═══ 第五层：经办人 Top 10 ═══ -->
+  <div class="card span-12">
     <div class="card-header">
       <div class="title">经办人 Top 10</div>
       <div class="badge">按金额排序</div>
     </div>
-    <div class="agent-list" id="agentList"></div>
-  </div>
-
-  <!-- 下钻面包屑 -->
-  <div class="drill-bar" id="drillBar">
-    <span class="drill-hint">💡 点击省份可下钻查看该省月度趋势</span>
+    <div class="chart-wrap" id="agentChart"></div>
   </div>
 
 </div>
@@ -421,41 +333,8 @@ const fmt = v => Math.round(v / 1e4).toLocaleString('en-US') + ' 万';
 // 12 个月份标签
 const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
 
-// 模拟数据 —— 各省份月付款金额（单位：元）
-function genProvinceData() {
-  const names = ['广东','江苏','浙江','山东','河南','四川','福建','湖北','湖南','安徽',
-                 '河北','北京','上海','辽宁','陕西','江西','重庆','广西','云南','贵州',
-                 '山西','内蒙古','吉林','黑龙江','新疆','甘肃','海南','宁夏','青海','西藏'];
-  const base = [980,850,780,620,510,480,460,430,410,390,
-                370,620,580,350,310,290,270,250,230,210,
-                190,170,150,140,120,100,80,60,40,20];
-  return names.map((n,i) => ({
-    name: n,
-    pay: Math.round(base[i] * (0.85 + Math.random() * 0.3)) * 10000,
-  })).sort((a,b) => b.pay - a.pay); // 降序：最大值在数组[0]
-}
-
-let provinceData = genProvinceData();
-console.log('genProvinceData 前5:', provinceData.slice(0,5).map(d=>d.name+d.pay));
-console.log('genProvinceData 后5:', provinceData.slice(-5).map(d=>d.name+d.pay));
-
 // 当前实际月份（用于判断哪些月份已发生）
 const currentRealMonth = new Date().getMonth() + 1; // 5 = 5月
-
-// 各省月度明细（用于下钻，未来月份为0）
-function genProvinceMonthly(provName) {
-  const base = provinceData.find(p => p.name === provName)?.pay || 5000000;
-  const monthlyBase = base / 5; // 分摊到已发生的月份
-  return months.map((m,i) => {
-    const monthNum = i + 1;
-    if (monthNum > currentRealMonth) return { month: m, pay: 0, repay: 0 };
-    return {
-      month: m,
-      pay: Math.round(monthlyBase * (0.7 + Math.random() * 0.6)),
-      repay: Math.round(monthlyBase * 0.7 * (0.6 + Math.random() * 0.5)),
-    };
-  });
-}
 
 // 全国月度数据（未来月份为0）
 function genNationalMonthly() {
@@ -477,8 +356,6 @@ const nationalMonthly = genNationalMonthly();
 // ══════════════════════════════════════════════════
 
 let currentPeriod = 'day';     // day / week / month
-let drillProvince = null;     // 下钻省份名称
-let isNational = true;        // 趋势图是否展示全国数据
 
 // ══════════════════════════════════════════════════
 //  第一层：KPI 环形进度
@@ -646,21 +523,13 @@ function updateTimestamp() {
 }
 
 function refreshAllData() {
-  // 重新生成省份数据
-  provinceData = genProvinceData();
   // 重新生成经办人数据
   agentData = genAgentData();
   // 重新生成全国月度数据
   nationalMonthly.length = 0;
   nationalMonthly.push(...genNationalMonthly());
-  // 重置下钻状态
-  drillProvince = null;
-  isNational = true;
-  document.getElementById('drillBar').innerHTML =
-    '<span class="drill-hint">💡 点击省份柱状图可下钻查看该省月度趋势</span>';
   // 重绘图表
-  renderTrend(null);
-  renderProvince();
+  renderTrend();
   renderAgents();
   // 更新时间戳
   updateTimestamp();
@@ -679,12 +548,10 @@ document.getElementById('refreshBtn').addEventListener('click', function() {
 const trendDom = document.getElementById('trendChart');
 const trendChart = echarts.init(trendDom);
 
-function renderTrend(province) {
-  const isNational = !province;
-  const data = isNational ? nationalMonthly : genProvinceMonthly(province);
-  const title = isNational ? '全国 · 月度统计' : province + ' · 月度统计';
+function renderTrend() {
+  const data = nationalMonthly;
 
-  document.getElementById('trendSubtitle').textContent = title;
+  document.getElementById('trendSubtitle').textContent = '全国 · 月度统计';
 
   // 计算资占金额
   const payData = data.map(d => d.pay);
@@ -741,51 +608,10 @@ function renderTrend(province) {
   });
 }
 
-renderTrend(null);
+renderTrend();
 
 // ══════════════════════════════════════════════════
-//  第四层：省份排名（纯 HTML 条形图）
-// ══════════════════════════════════════════════════
-
-function renderProvince() {
-  // 降序排列：最大值在 data[0]，从上到下依次排列
-  const data = [...provinceData].sort((a,b) => b.pay - a.pay);
-  const maxPay = data[0].pay;
-  const list = document.getElementById('provinceList');
-
-  // 生成每个省份行
-  list.innerHTML = data.map((d, i) => {
-    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal';
-    const rankLabel = i < 3 ? ['🥇','🥈','🥉'][i] : (i + 1);
-    const pct = (d.pay / maxPay * 100).toFixed(1);
-    return `<div class="prov-item" data-prov="${d.name}">
-      <span class="rank-num">${rankLabel}</span>
-      <span class="prov-name">${d.name}</span>
-      <div class="bar-track"><div class="bar-fill ${rankClass}" style="width:${pct}%"></div></div>
-      <span class="bar-val" style="color:${i === 0 ? 'var(--gold)' : i === 1 ? 'var(--silver)' : i === 2 ? 'var(--bronze)' : 'var(--text-secondary)'}">${fmt(d.pay)}</span>
-    </div>`;
-  }).join('');
-
-  // 为每个省份项绑定点击下钻事件
-  list.querySelectorAll('.prov-item').forEach(el => {
-    el.addEventListener('click', function() {
-      const provName = this.dataset.prov;
-      drillProvince = provName;
-      isNational = false;
-      renderTrend(provName);
-      document.getElementById('drillBar').innerHTML = `
-        <span class="tag">下钻：${provName}<span class="close" id="drillClose">&times;</span></span>
-        <span style="color:var(--text-muted);font-size:11px;">趋势图已切换为 ${provName} 月度数据</span>
-      `;
-      document.getElementById('drillClose').addEventListener('click', clearDrill);
-    });
-  });
-}
-
-renderProvince();
-
-// ══════════════════════════════════════════════════
-//  经办人数据
+//  经办人 Top 10（水平柱状图）
 // ══════════════════════════════════════════════════
 
 const agentNames = ['张伟','王芳','李强','刘洋','陈静','赵磊','孙莉','周涛','吴敏','郑浩',
@@ -800,32 +626,41 @@ function genAgentData() {
 
 let agentData = genAgentData();
 
+const agentChart = echarts.init(document.getElementById('agentChart'));
 function renderAgents() {
-  const list = document.getElementById('agentList');
-  list.innerHTML = agentData.slice(0, 10).map((d, i) => {
-    const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal';
-    const rankLabel = i < 3 ? ['🥇','🥈','🥉'][i] : (i + 1);
-    return `<div class="agent-item">
-      <span class="agent-rank">${rankLabel}</span>
-      <span class="agent-dot ${rankClass}"></span>
-      <span class="agent-name">${d.name}</span>
-      <span class="agent-val ${rankClass}">${fmt(d.amount)}</span>
-    </div>`;
-  }).join('');
+  const top10 = agentData.slice(0, 10);
+  const colors = ['#ffd700','#c0c0c0','#cd7f32','#1890ff','#1890ff',
+                  '#1890ff','#1890ff','#1890ff','#1890ff','#1890ff'];
+  agentChart.setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},
+      valueFormatter:v => '¥ ' + fmt(v)},
+    grid:{left:80,right:60,top:5,bottom:5},
+    xAxis:{type:'value',
+      splitLine:{lineStyle:{color:'#1e2440',type:'dashed'}},
+      axisLabel:{
+        color:'#4a5278',fontSize:10,
+        formatter:v => Math.round(v / 1e4).toLocaleString('en-US') + '万',
+      },
+      axisLine:{lineStyle:{color:'#1e2440'}}},
+    yAxis:{type:'category',data:top10.map(d=>d.name).reverse(),
+      axisLine:{show:false},axisTick:{show:false},axisLabel:{color:'#8892b0',fontSize:11}},
+    series:[{
+      type:'bar',barWidth:14,
+      itemStyle:{
+        color:p=>colors[p.dataIndex],
+        borderRadius:[0,4,4,0],
+      },
+      label:{
+        show:true,position:'right',fontSize:10,
+        color:p=>p.dataIndex < 3 ? colors[p.dataIndex] : '#8892b0',
+        formatter:p => '¥ ' + fmt(p.value),
+      },
+      data:top10.map(d=>d.amount).reverse(),
+    }],
+  });
 }
 
 renderAgents();
-
-// ══════════════════════════════════════════════════
-//  下钻：清除
-// ══════════════════════════════════════════════════
-
-function clearDrill() {
-  drillProvince = null;
-  isNational = true;
-  renderTrend(null);
-  document.getElementById('drillBar').innerHTML = '<span class="drill-hint">💡 点击省份可下钻查看该省月度趋势</span>';
-}
 
 // ══════════════════════════════════════════════════
 //  自适应 Resize
@@ -838,6 +673,7 @@ window.addEventListener('resize', () => {
   brandChartDS.resize();
   categoryChartDS.resize();
   agingChart.resize();
+  agentChart.resize();
 });
 </script>
 </body>
